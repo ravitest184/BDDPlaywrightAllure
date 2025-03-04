@@ -1,22 +1,23 @@
 package runner;
 
-
 import org.junit.runner.RunWith;
-
 import io.cucumber.junit.Cucumber;
 import io.cucumber.junit.CucumberOptions;
 
 @RunWith(Cucumber.class)
 @CucumberOptions(
-        features = "src/test/java/features",  // Relative path instead of absolute
-        glue = "stepdefinitions",                 
+        features = "src/test/resources/features",
+        glue = {"stepdefinitions", "utils"},
         plugin = {
-                "io.qameta.allure.cucumber7jvm.AllureCucumber7Jvm",
                 "pretty",
-                "json:target/cucumber-report.json",
-                "html:target/cucumber-report.html",
-                "utils.HooksPlugin"
-        }
+                "html:target/cucumber-reports/cucumber.html",
+                "json:target/cucumber-reports/cucumber.json",
+                "junit:target/cucumber-reports/cucumber.xml",
+                "io.qameta.allure.cucumber7jvm.AllureCucumber7Jvm:target/allure-results",
+                "rerun:target/failed_scenarios.txt"
+        },
+        monochrome = true,
+        publish = true
 )
 public class CucumberTest {
 }

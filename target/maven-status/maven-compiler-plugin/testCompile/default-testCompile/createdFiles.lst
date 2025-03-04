@@ -1,4 +1,4 @@
+utils/Hooks.class
 utils/PlaywrightManager.class
 stepdefinitions/LoginSteps.class
-utils/Hooks.class
 runner/CucumberTest.class

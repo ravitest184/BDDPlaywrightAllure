@@ -1,5 +1,6 @@
 package stepdefinitions;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import com.microsoft.playwright.Page;
@@ -16,20 +17,28 @@ public class LoginSteps {
 
     @Given("I am on the login page")
     public void iAmOnTheLoginPage() {
-        // Initialize the LoginPage with Playwright's Page
-        Page page = PlaywrightManager.getPage(); // This will fetch the initialized Page
-        loginPage = new LoginPage(page); // Initialize the LoginPage with the correct page instance
-        loginPage.navigateToLoginPage();  // Navigating to the login page
+        Page page = PlaywrightManager.getPage();
+        loginPage = new LoginPage(page);
+        loginPage.navigateToLoginPage();
     }
 
-    @When("I enter valid credentials")
-    public void iEnterValidCredentials() {
-        loginPage.login("student", "Password123");  // Assuming "student" and "Password123" are valid credentials
+    @When("I enter username {string} and password {string}")
+    public void iEnterUsernameAndPassword(String username, String password) {
+        loginPage.login(username, password);
     }
 
     @Then("I should be logged in successfully")
     public void iShouldBeLoggedInSuccessfully() {
-        boolean isLoggedIn = loginPage.isLoggedIn();  // Check if login was successful
-        assertTrue("Login failed", isLoggedIn);  // Assert login success
+        assertTrue("Login failed", loginPage.isLoggedIn());
+    }
+
+    @Then("I should see the success message {string}")
+    public void iShouldSeeTheSuccessMessage(String expectedMessage) {
+        assertEquals(expectedMessage, loginPage.getSuccessMessage());
+    }
+
+    @Then("I should see the error message {string}")
+    public void iShouldSeeTheErrorMessage(String expectedMessage) {
+        assertEquals(expectedMessage, loginPage.getErrorMessage());
     }
 }
